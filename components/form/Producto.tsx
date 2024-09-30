@@ -15,7 +15,7 @@ interface Product {
   stock: number;
 }
 
-const ProductoForm = () => {
+const ProductoForm: React.FC = () => {
   const router = useRouter();
   const [product, setProduct] = useState<Product>({
     image: '',
@@ -26,7 +26,7 @@ const ProductoForm = () => {
   });
   
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Handle form changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -43,18 +43,18 @@ const ProductoForm = () => {
         setImageFile(file);
       } else {
         alert('Por favor selecciona un archivo de imagen válido.');
+        setImageFile(null);
       }
     }
   };
 
   // Upload file to Firebase Storage
-  const uploadFile = async (file: File, folder: string) => {
+  const uploadFile = async (file: File, folder: string): Promise<string> => {
     const storage = getStorage();
-    const uniqueName = `${folder}/${Date.now()}_${file.name}`; // Generate unique name for the file
+    const uniqueName = `${folder}/${Date.now()}_${file.name}`; // Generate a unique name for the file
     const storageRef = ref(storage, uniqueName);
     await uploadBytes(storageRef, file);
-    const url = await getDownloadURL(storageRef);
-    return url;
+    return await getDownloadURL(storageRef);
   };
 
   // Handle form submission
@@ -115,6 +115,7 @@ const ProductoForm = () => {
             value={product.name} 
             onChange={handleChange} 
             required 
+            className='border border-gray-300 rounded-md p-2' // Optional styling
           />
         </div>
         <div className='ContInput'>
@@ -124,6 +125,7 @@ const ProductoForm = () => {
             value={product.description} 
             onChange={handleChange} 
             required 
+            className='border border-gray-300 rounded-md p-2' // Optional styling
           />
         </div>
         <div className='ContInput'>
@@ -134,6 +136,7 @@ const ProductoForm = () => {
             value={product.price} 
             onChange={handleChange} 
             required 
+            className='border border-gray-300 rounded-md p-2' // Optional styling
           />
         </div>
         <div className='ContInput'>
@@ -144,6 +147,7 @@ const ProductoForm = () => {
             value={product.stock} 
             onChange={handleChange} 
             required 
+            className='border border-gray-300 rounded-md p-2' // Optional styling
           />
         </div>
         <div className='ContInput'>
@@ -154,6 +158,7 @@ const ProductoForm = () => {
             accept="image/*" 
             onChange={handleFileChange} 
             required 
+            className='border border-gray-300 rounded-md p-2' // Optional styling
           />
         </div>
         <Button 
@@ -171,4 +176,3 @@ const ProductoForm = () => {
 };
 
 export default ProductoForm;
-

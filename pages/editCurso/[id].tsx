@@ -11,7 +11,7 @@ import BrandSidebar from '@/layouts/default';
 
 const CursosForm = () => {
   const router = useRouter();
-  const { id } = router.query; // Obtener ID del curso desde la URL
+  const { id } = router.query; // Get course ID from the URL
   const [course, setCourse] = useState<any>(null);
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -79,60 +79,60 @@ const CursosForm = () => {
 
   return (
     <BrandSidebar>
-    <Card className='p-4 flex flex-col w-full shadow-none border'>
-      <h1 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl'>Editar Curso</h1>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-        <div className='ContInput'>
-          <label>Título</label>
-          <input type="text" name="title" value={course.title} onChange={handleChange} required />
-        </div>
-        <div className='ContInput'>
-          <label>Descripción</label>
-          <textarea name="description" value={course.description} onChange={handleChange} required />
-        </div>
-        <div className='ContInput'>
-          <label>Nivel</label>
-          <Select name="level" value={course.level} onChange={handleChange} required>
-            <SelectItem key="Básico" value="Básico">Básico</SelectItem>
-            <SelectItem key="Intermedio" value="Intermedio">Intermedio</SelectItem>
-            <SelectItem key="Avanzado" value="Avanzado">Avanzado</SelectItem>
-          </Select>
-        </div>
-        <div className='ContInput'>
-          <label>Idioma</label>
-          <input type="text" name="language" value={course.language} onChange={handleChange} required />
-        </div>
-        <div className='ContInput'>
-          <label>Duración (minutos)</label>
-          <input type="number" name="duration" value={course.duration} onChange={handleChange} required />
-        </div>
-        <div className='ContInput'>
-          <label>Cantidad Comprados</label>
-          <input type="number" name="purchased" value={course.purchased} onChange={handleChange} required />
-        </div>
-        <div className='ContInput'>
-          <label>Profesor</label>
-          <input type="text" name="teacher" value={course.teacher} onChange={handleChange} required />
-        </div>
-        <div className='ContInput'>
-          <label>Descripción del Profesor</label>
-          <textarea name="teacherDescription" value={course.teacherDescription} onChange={handleChange} required />
-        </div>
-        <div className='ContInput'>
-          <label>Precio</label>
-          <input type="number" name="price" value={course.price} onChange={handleChange} required />
-        </div>
-        <div className='ContInput'>
-          <label>Video (opcional)</label>
-          <input type="file" name="video" accept="video/*" onChange={handleFileChange} />
-        </div>
-        <div className='ContInput'>
-          <label>Imagen (opcional)</label>
-          <input type="file" name="image" accept="image/*" onChange={handleFileChange} />
-        </div>
-        <Button type="submit" color='primary' variant='shadow' className='rounded w-full mt-5'>Actualizar Curso</Button>
-      </form>
-    </Card>
+      <Card className='p-4 flex flex-col w-full shadow-none border'>
+        <h1 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl'>Editar Curso</h1>
+        <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+          <div className='ContInput'>
+            <label htmlFor="title">Título</label>
+            <input type="text" id="title" name="title" value={course.title} onChange={handleChange} required />
+          </div>
+          <div className='ContInput'>
+            <label htmlFor="description">Descripción</label>
+            <textarea id="description" name="description" value={course.description} onChange={handleChange} required />
+          </div>
+          <div className='ContInput'>
+            <label htmlFor="level">Nivel</label>
+            <Select id="level" name="level" value={course.level} onChange={handleChange} required>
+              <SelectItem key="Básico" value="Básico">Básico</SelectItem>
+              <SelectItem key="Intermedio" value="Intermedio">Intermedio</SelectItem>
+              <SelectItem key="Avanzado" value="Avanzado">Avanzado</SelectItem>
+            </Select>
+          </div>
+          <div className='ContInput'>
+            <label htmlFor="language">Idioma</label>
+            <input type="text" id="language" name="language" value={course.language} onChange={handleChange} required />
+          </div>
+          <div className='ContInput'>
+            <label htmlFor="duration">Duración (minutos)</label>
+            <input type="number" id="duration" name="duration" value={course.duration} onChange={handleChange} required />
+          </div>
+          <div className='ContInput'>
+            <label htmlFor="purchased">Cantidad Comprados</label>
+            <input type="number" id="purchased" name="purchased" value={course.purchased} onChange={handleChange} required />
+          </div>
+          <div className='ContInput'>
+            <label htmlFor="teacher">Profesor</label>
+            <input type="text" id="teacher" name="teacher" value={course.teacher} onChange={handleChange} required />
+          </div>
+          <div className='ContInput'>
+            <label htmlFor="teacherDescription">Descripción del Profesor</label>
+            <textarea id="teacherDescription" name="teacherDescription" value={course.teacherDescription} onChange={handleChange} required />
+          </div>
+          <div className='ContInput'>
+            <label htmlFor="price">Precio</label>
+            <input type="number" id="price" name="price" value={course.price} onChange={handleChange} required />
+          </div>
+          <div className='ContInput'>
+            <label htmlFor="video">Video (opcional)</label>
+            <input type="file" id="video" name="video" accept="video/*" onChange={handleFileChange} />
+          </div>
+          <div className='ContInput'>
+            <label htmlFor="image">Imagen (opcional)</label>
+            <input type="file" id="image" name="image" accept="image/*" onChange={handleFileChange} />
+          </div>
+          <Button type="submit" color='primary' variant='shadow' className='rounded w-full mt-5'>Actualizar Curso</Button>
+        </form>
+      </Card>
     </BrandSidebar>
   );
 };

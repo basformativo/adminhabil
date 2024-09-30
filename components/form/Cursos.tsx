@@ -53,7 +53,7 @@ const CursosForm = () => {
   
   const [chapterTitle, setChapterTitle] = useState('');
   const [chapterDescription, setChapterDescription] = useState('');
-  const [chapterDuration, setChapterDuration] = useState(0);
+  const [chapterDuration, setChapterDuration] = useState<number>(0);
   const [chapterVideoFile, setChapterVideoFile] = useState<File | null>(null);
 
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -85,7 +85,7 @@ const CursosForm = () => {
 
     try {
       const videoUrl = await uploadFile(chapterVideoFile, 'chapter-videos');
-      const newChapter = { title: chapterTitle, description: chapterDescription, duration: chapterDuration, video: videoUrl };
+      const newChapter: Chapter = { title: chapterTitle, description: chapterDescription, duration: chapterDuration, video: videoUrl };
       setCourse((prevCourse) => ({
         ...prevCourse,
         chapters: [...prevCourse.chapters, newChapter],
@@ -101,7 +101,7 @@ const CursosForm = () => {
     }
   };
 
-  const uploadFile = async (file: File, folder: string) => {
+  const uploadFile = async (file: File, folder: string): Promise<string> => {
     const storage = getStorage();
     const storageRef = ref(storage, `${folder}/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
@@ -210,9 +210,7 @@ const CursosForm = () => {
         <div className='ContInput'>
           <label>Video Principal</label>
           <div className="flex items-center justify-center w-full">
-            <label
-              className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-            >
+            <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
                 <FaUpload className="w-8 h-8 mb-3 text-gray-400" />
                 <p className="mb-2 text-sm text-gray-500">
@@ -220,22 +218,14 @@ const CursosForm = () => {
                 </p>
                 <p className="text-xs text-gray-500">MP4, WebM, Ogg (MAX. 100MB)</p>
               </div>
-              <input
-                type="file"
-                name="video"
-                accept="video/*"
-                onChange={handleFileChange}
-                className="hidden"
-              />
+              <input type="file" name="video" accept="video/*" onChange={handleFileChange} className="hidden" />
             </label>
           </div>
         </div>
         <div className='ContInput'>
           <label>Imagen</label>
           <div className="flex items-center justify-center w-full">
-            <label
-              className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-            >
+            <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
                 <FaUpload className="w-8 h-8 mb-3 text-gray-400" />
                 <p className="mb-2 text-sm text-gray-500">
@@ -243,14 +233,7 @@ const CursosForm = () => {
                 </p>
                 <p className="text-xs text-gray-500">Imagen (MAX. 2MB)</p>
               </div>
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden"
-                required
-              />
+              <input type="file" name="image" accept="image/*" onChange={handleFileChange} className="hidden" required />
             </label>
           </div>
         </div>

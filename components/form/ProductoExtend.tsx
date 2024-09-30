@@ -20,7 +20,7 @@ interface Product {
   price: number;
 }
 
-const ProductoExtend = () => {
+const ProductoExtend: React.FC = () => {
   const router = useRouter();
   const [product, setProduct] = useState<Product>({
     document: '',
@@ -37,8 +37,9 @@ const ProductoExtend = () => {
   const [documentFile, setDocumentFile] = useState<File | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploadingFileName, setUploadingFileName] = useState('');
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [uploadingFileName, setUploadingFileName] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -48,15 +49,24 @@ const ProductoExtend = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
     if (files && files.length > 0) {
+      const file = files[0];
       if (name === 'document') {
-        setDocumentFile(files[0]);
+        if (file.size > 100 * 1024 * 1024) { // Limit to 100MB
+          alert('El archivo no puede ser mayor a 100MB.');
+          return;
+        }
+        setDocumentFile(file);
       } else if (name === 'image') {
-        setImageFile(files[0]);
+        if (file.size > 5 * 1024 * 1024) { // Limit to 5MB
+          alert('La imagen no puede ser mayor a 5MB.');
+          return;
+        }
+        setImageFile(file);
       }
     }
   };
 
-  const uploadFile = async (file: File, folder: string) => {
+  const uploadFile = async (file: File, folder: string): Promise<string> => {
     const storage = getStorage();
     const storageRef = ref(storage, `${folder}/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
@@ -70,6 +80,7 @@ const ProductoExtend = () => {
           setUploadingFileName(file.name);
         },
         (error) => {
+          setError('Error al subir el archivo. Inténtalo de nuevo.');
           reject(error);
         },
         async () => {
@@ -82,6 +93,8 @@ const ProductoExtend = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError(''); // Reset error message
+
     try {
       const documentUrl = documentFile ? await uploadFile(documentFile, 'documents') : '';
       const imageUrl = imageFile ? await uploadFile(imageFile, 'images') : '';
@@ -95,7 +108,7 @@ const ProductoExtend = () => {
       alert('Producto creado con éxito');
       router.push('/Productos');
 
-      // Reiniciar formulario
+      // Reset form
       setProduct({
         document: '',
         image: '',
@@ -109,6 +122,7 @@ const ProductoExtend = () => {
       });
       setDocumentFile(null);
       setImageFile(null);
+      setUploadProgress(0); // Reset upload progress
     } catch (error) {
       console.error('Error al crear el producto: ', error);
       alert('Error al crear el producto. Inténtalo de nuevo.');
@@ -118,6 +132,7 @@ const ProductoExtend = () => {
   return (
     <Card className='p-4 flex flex-col w-full shadow-none border'>
       <h1 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl'>Crear/Editar Producto</h1>
+      {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         {/* Campos del producto */}
         <div className='ContInput'>
@@ -155,9 +170,7 @@ const ProductoExtend = () => {
         <div className='ContInput'>
           <label>Documento/Archivo Principal</label>
           <div className="flex items-center justify-center w-full">
-            <label
-              className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-            >
+            <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
                 <FaUpload className="w-8 h-8 mb-3 text-gray-400" />
                 <p className="mb-2 text-sm text-gray-500">
@@ -165,22 +178,14 @@ const ProductoExtend = () => {
                 </p>
                 <p className="text-xs text-gray-500">PDF, DOC, MP4, JPG, PNG (MAX. 100MB)</p>
               </div>
-              <input
-                type="file"
-                name="document"
-                accept=".pdf,.doc,.docx,image/*,video/*"
-                onChange={handleFileChange}
-                className="hidden"
-              />
+              <input type="file" name="document" accept=".pdf,.doc,.docx,image/*,video/*" onChange={handleFileChange} className="hidden" />
             </label>
           </div>
         </div>
         <div className='ContInput'>
           <label>Imagen</label>
           <div className="flex items-center justify-center w-full">
-            <label
-              className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-            >
+            <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
                 <FaUpload className="w-8 h-8 mb-3 text-gray-400" />
                 <p className="mb-2 text-sm text-gray-500">
@@ -188,16 +193,16 @@ const ProductoExtend = () => {
                 </p>
                 <p className="text-xs text-gray-500">JPG, PNG (MAX. 5MB)</p>
               </div>
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden"
-              />
+              <input type="file" name="image" accept="image/*" onChange={handleFileChange} className="hidden" />
             </label>
           </div>
         </div>
+        {uploadProgress > 0 && (
+          <div className="mt-2">
+            <p>Subiendo: {uploadingFileName}</p>
+            <progress value={uploadProgress} max="100" className="w-full" />
+          </div>
+        )}
         <Button type="submit" color='primary' variant='shadow' className='rounded w-full mt-5'>
           Guardar Producto
         </Button>

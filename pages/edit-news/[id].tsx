@@ -12,15 +12,15 @@ interface News {
   content: string;
   author: string;
   date: string;
-  image?: string; // La imagen puede ser opcional
+  image?: string; // Optional image
 }
 
 const NoticiasForm = () => {
   const router = useRouter();
-  const { id } = router.query; // Obtener ID de la noticia desde la URL
+  const { id } = router.query; // Get news ID from the URL
   const [news, setNews] = useState<News | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [loading, setLoading] = useState<boolean>(false); // Estado para manejar el loading
+  const [loading, setLoading] = useState<boolean>(false); // Loading state
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -60,7 +60,7 @@ const NoticiasForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true); // Inicia loading
+    setLoading(true); // Start loading
     try {
       let imageUrl = '';
       if (imageFile) {
@@ -68,22 +68,22 @@ const NoticiasForm = () => {
       }
 
       if (news) {
-        // Actualizar la noticia en Firestore
+        // Update the news in Firestore
         await updateDoc(doc(db, 'news', id as string), {
           ...news,
-          image: imageFile ? imageUrl : news.image, // Mantiene la imagen actual si no se sube una nueva
-          date: new Date(news.date).toISOString(), // Guardar la fecha en formato ISO
+          image: imageFile ? imageUrl : news.image, // Maintain the current image if no new one is uploaded
+          date: new Date(news.date).toISOString(), // Save date in ISO format
         });
       }
 
       alert('Noticia actualizada con éxito');
-      router.push('/Noticias'); // Redirige a la página de noticias
+      router.push('/Noticias'); // Redirect to the news page
 
     } catch (error) {
       console.error('Error al actualizar la noticia: ', error);
       alert('Ocurrió un error al actualizar la noticia.');
     } finally {
-      setLoading(false); // Finaliza loading
+      setLoading(false); // End loading
     }
   };
 
@@ -91,72 +91,77 @@ const NoticiasForm = () => {
 
   return (
     <BrandSidebar>
-    <Card className='p-6 flex flex-col w-full md:w-full mx-auto shadow-none border'>
-      <h1 className='text-3xl font-semibold tracking-tight text-gray-900 mb-4'>Editar Noticia</h1>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-6'>
-        <div className='ContInput'>
-          <label className='block text-gray-700 font-medium'>Título</label>
-          <input
-            type="text"
-            name="title"
-            value={news.title}
-            onChange={handleChange}
-            required
-            className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
-          />
-        </div>
+      <Card className='p-6 flex flex-col w-full md:w-full mx-auto shadow-none border'>
+        <h1 className='text-3xl font-semibold tracking-tight text-gray-900 mb-4'>Editar Noticia</h1>
+        <form onSubmit={handleSubmit} className='flex flex-col gap-6'>
+          <div className='ContInput'>
+            <label htmlFor="title" className='block text-gray-700 font-medium'>Título</label>
+            <input
+              id="title"
+              type="text"
+              name="title"
+              value={news.title}
+              onChange={handleChange}
+              required
+              className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
+            />
+          </div>
 
-        <div className='ContInput'>
-          <label className='block text-gray-700 font-medium'>Contenido</label>
-          <textarea
-            name="content"
-            value={news.content}
-            onChange={handleChange}
-            required
-            className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
-          />
-        </div>
+          <div className='ContInput'>
+            <label htmlFor="content" className='block text-gray-700 font-medium'>Contenido</label>
+            <textarea
+              id="content"
+              name="content"
+              value={news.content}
+              onChange={handleChange}
+              required
+              className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
+            />
+          </div>
 
-        <div className='ContInput'>
-          <label className='block text-gray-700 font-medium'>Autor</label>
-          <input
-            type="text"
-            name="author"
-            value={news.author}
-            onChange={handleChange}
-            required
-            className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
-          />
-        </div>
+          <div className='ContInput'>
+            <label htmlFor="author" className='block text-gray-700 font-medium'>Autor</label>
+            <input
+              id="author"
+              type="text"
+              name="author"
+              value={news.author}
+              onChange={handleChange}
+              required
+              className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
+            />
+          </div>
 
-        <div className='ContInput'>
-          <label className='block text-gray-700 font-medium'>Fecha</label>
-          <input
-            type="date"
-            name="date"
-            value={news.date.split('T')[0]} // Formato adecuado para el input tipo date
-            onChange={handleChange}
-            required
-            className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
-          />
-        </div>
+          <div className='ContInput'>
+            <label htmlFor="date" className='block text-gray-700 font-medium'>Fecha</label>
+            <input
+              id="date"
+              type="date"
+              name="date"
+              value={news.date.split('T')[0]} // Proper format for date input
+              onChange={handleChange}
+              required
+              className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
+            />
+          </div>
 
-        <div className='ContInput'>
-          <label className='block text-gray-700 font-medium'>Imagen (opcional)</label>
-          <input
-            type="file"
-            name="image"
-            accept="image/*"
-            onChange={handleFileChange}
-            className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
-          />
-        </div>
+          <div className='ContInput'>
+            <label htmlFor="image" className='block text-gray-700 font-medium'>Imagen (opcional)</label>
+            <input
+              id="image"
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleFileChange}
+              className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'
+            />
+          </div>
 
-        <Button type="submit" color='primary' isDisabled={loading} className='rounded w-full mt-5'>
-          {loading ? 'Guardando...' : 'Actualizar Noticia'}
-        </Button>
-      </form>
-    </Card>
+          <Button type="submit" color='primary' isDisabled={loading} className='rounded w-full mt-5'>
+            {loading ? 'Guardando...' : 'Actualizar Noticia'}
+          </Button>
+        </form>
+      </Card>
     </BrandSidebar>
   );
 };

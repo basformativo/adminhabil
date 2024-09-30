@@ -11,10 +11,10 @@ interface News {
   content: string;
   author: string;
   date: string;
-  image?: string; // La imagen puede ser opcional
+  image?: string; // The image can be optional
 }
 
-const NoticiasForm = () => {
+const NoticiasForm: React.FC = () => {
   const router = useRouter();
   const [news, setNews] = useState<News>({
     title: '',
@@ -25,7 +25,7 @@ const NoticiasForm = () => {
   });
 
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [loading, setLoading] = useState<boolean>(false); // Estado para manejar el loading
+  const [loading, setLoading] = useState<boolean>(false); // State for loading
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -39,7 +39,7 @@ const NoticiasForm = () => {
     }
   };
 
-  const uploadFile = async (file: File, folder: string) => {
+  const uploadFile = async (file: File, folder: string): Promise<string> => {
     const storage = getStorage();
     const storageRef = ref(storage, `${folder}/${file.name}`);
     await uploadBytes(storageRef, file);
@@ -48,24 +48,24 @@ const NoticiasForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true); // Inicia loading
+    setLoading(true); // Start loading
     try {
       let imageUrl = '';
       if (imageFile) {
         imageUrl = await uploadFile(imageFile, 'news');
       }
 
-      // Guardar la noticia en Firestore con la URL de la imagen (si existe)
+      // Save the news article to Firestore with the image URL (if it exists)
       await addDoc(collection(db, 'news'), {
         ...news,
         image: imageUrl,
-        date: new Date(news.date).toISOString(), // Guardar la fecha en formato ISO
+        date: new Date(news.date).toISOString(), // Store the date in ISO format
       });
 
       alert('Noticia creada con éxito');
-      router.push('/Noticias'); // Redirige a la página de blog
+      router.push('/Noticias'); // Redirect to news page
 
-      // Reiniciar el formulario
+      // Reset the form
       setNews({
         title: '',
         content: '',
@@ -78,7 +78,7 @@ const NoticiasForm = () => {
       console.error('Error al crear la noticia: ', error);
       alert('Ocurrió un error al crear la noticia.');
     } finally {
-      setLoading(false); // Finaliza loading
+      setLoading(false); // End loading
     }
   };
 
@@ -153,4 +153,3 @@ const NoticiasForm = () => {
 };
 
 export default NoticiasForm;
-
