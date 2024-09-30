@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+label{
+@apply text-sm font-medium text-gray-800
+}
+input{
+    @apply rounded h-10 border shadow-sm
+}
+.ContInput{
+    @apply flex flex-col gap-2
+}
+textarea{
+    @apply rounded h-10 border shadow-sm
+}
