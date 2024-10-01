@@ -108,57 +108,62 @@ const ProductoForm: React.FC = () => {
       <h1 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl'>Crear/Editar Producto</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <div className='ContInput'>
-          <label>Nombre</label>
+          <label htmlFor="name">Nombre</label>
           <input 
             type="text" 
+            id="name" 
             name="name" 
             value={product.name} 
             onChange={handleChange} 
             required 
-            className='border border-gray-300 rounded-md p-2' // Optional styling
+            className='border border-gray-300 rounded-md p-2' 
           />
         </div>
         <div className='ContInput'>
-          <label>Descripción</label>
+          <label htmlFor="description">Descripción</label>
           <textarea 
+            id="description" 
             name="description" 
             value={product.description} 
             onChange={handleChange} 
             required 
-            className='border border-gray-300 rounded-md p-2' // Optional styling
+            className='border border-gray-300 rounded-md p-2' 
           />
         </div>
         <div className='ContInput'>
-          <label>Precio</label>
+          <label htmlFor="price">Precio</label>
           <input 
             type="number" 
+            id="price" 
             name="price" 
             value={product.price} 
             onChange={handleChange} 
             required 
-            className='border border-gray-300 rounded-md p-2' // Optional styling
+            className='border border-gray-300 rounded-md p-2' 
           />
         </div>
         <div className='ContInput'>
-          <label>Stock</label>
+          <label htmlFor="stock">Stock</label>
           <input 
             type="number" 
+            id="stock" 
             name="stock" 
             value={product.stock} 
             onChange={handleChange} 
             required 
-            className='border border-gray-300 rounded-md p-2' // Optional styling
+            className='border border-gray-300 rounded-md p-2' 
           />
         </div>
         <div className='ContInput'>
-          <label>Imagen</label>
+          <label htmlFor="image">Imagen</label>
           <input 
             type="file" 
+            id="image" 
             name="image" 
             accept="image/*" 
             onChange={handleFileChange} 
             required 
-            className='border border-gray-300 rounded-md p-2' // Optional styling
+            className='border border-gray-300 rounded-md p-2' 
           />
         </div>
         <Button 
@@ -173,6 +178,6 @@ const ProductoForm: React.FC = () => {
       </form>
     </Card>
   );
-};
+};  
 
 export default ProductoForm;
