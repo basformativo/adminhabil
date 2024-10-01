@@ -87,10 +87,11 @@ const NoticiasForm: React.FC = () => {
       <h1 className='text-3xl font-semibold tracking-tight text-gray-900 mb-4'>Crear/Editar Noticia</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-6'>
         <div className='ContInput'>
-          <label className='block text-gray-700 font-medium'>Título</label>
+          <label htmlFor="title" className='block text-gray-700 font-medium'>Título</label>
           <input
             type="text"
             name="title"
+            id="title"
             value={news.title}
             onChange={handleChange}
             required
@@ -99,9 +100,10 @@ const NoticiasForm: React.FC = () => {
         </div>
 
         <div className='ContInput'>
-          <label className='block text-gray-700 font-medium'>Contenido</label>
+          <label htmlFor="content" className='block text-gray-700 font-medium'>Contenido</label>
           <textarea
             name="content"
+            id="content"
             value={news.content}
             onChange={handleChange}
             required
@@ -110,10 +112,11 @@ const NoticiasForm: React.FC = () => {
         </div>
 
         <div className='ContInput'>
-          <label className='block text-gray-700 font-medium'>Autor</label>
+          <label htmlFor="author" className='block text-gray-700 font-medium'>Autor</label>
           <input
             type="text"
             name="author"
+            id="author"
             value={news.author}
             onChange={handleChange}
             required
@@ -122,10 +125,11 @@ const NoticiasForm: React.FC = () => {
         </div>
 
         <div className='ContInput'>
-          <label className='block text-gray-700 font-medium'>Fecha</label>
+          <label htmlFor="date" className='block text-gray-700 font-medium'>Fecha</label>
           <input
             type="date"
             name="date"
+            id="date"
             value={news.date}
             onChange={handleChange}
             required
@@ -134,10 +138,11 @@ const NoticiasForm: React.FC = () => {
         </div>
 
         <div className='ContInput'>
-          <label className='block text-gray-700 font-medium'>Imagen</label>
+          <label htmlFor="image" className='block text-gray-700 font-medium'>Imagen</label>
           <input
             type="file"
             name="image"
+            id="image"
             accept="image/*"
             onChange={handleFileChange}
             className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500'

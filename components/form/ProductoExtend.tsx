@@ -136,39 +136,39 @@ const ProductoExtend: React.FC = () => {
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         {/* Campos del producto */}
         <div className='ContInput'>
-          <label>Título</label>
-          <input type="text" name="title" value={product.title} onChange={handleChange} className="border rounded-md p-2 w-full" required />
+          <label htmlFor="title">Título</label>
+          <input type="text" id="title" name="title" value={product.title} onChange={handleChange} className="border rounded-md p-2 w-full" required />
         </div>
         <div className='ContInput'>
-          <label>Descripción</label>
-          <textarea name="description" value={product.description} onChange={handleChange} className="border rounded-md p-2 w-full" required />
+          <label htmlFor="description">Descripción</label>
+          <textarea id="description" name="description" value={product.description} onChange={handleChange} className="border rounded-md p-2 w-full" required />
         </div>
         <div className='ContInput'>
-          <label>Nivel</label>
-          <Select label='Nivel' name="level" value={product.level} onChange={handleChange} required>
+          <label htmlFor="level">Nivel</label>
+          <Select id="level" label='Nivel' name="level" value={product.level} onChange={handleChange} required>
             <SelectItem key="Básico" value="Básico">Básico</SelectItem>
             <SelectItem key="Intermedio" value="Intermedio">Intermedio</SelectItem>
             <SelectItem key="Avanzado" value="Avanzado">Avanzado</SelectItem>
           </Select>
         </div>
         <div className='ContInput'>
-          <label>Idioma</label>
-          <input type="text" name="language" value={product.language} onChange={handleChange} className="border rounded-md p-2 w-full" required />
+          <label htmlFor="language">Idioma</label>
+          <input type="text" id="language" name="language" value={product.language} onChange={handleChange} className="border rounded-md p-2 w-full" required />
         </div>
         <div className='ContInput'>
-          <label>Profesor</label>
-          <input type="text" name="teacher" value={product.teacher} onChange={handleChange} className="border rounded-md p-2 w-full" required />
+          <label htmlFor="teacher">Profesor</label>
+          <input type="text" id="teacher" name="teacher" value={product.teacher} onChange={handleChange} className="border rounded-md p-2 w-full" required />
         </div>
         <div className='ContInput'>
-          <label>Descripción del Profesor</label>
-          <textarea name="teacherDescription" value={product.teacherDescription} onChange={handleChange} className="border rounded-md p-2 w-full" required />
+          <label htmlFor="teacherDescription">Descripción del Profesor</label>
+          <textarea id="teacherDescription" name="teacherDescription" value={product.teacherDescription} onChange={handleChange} className="border rounded-md p-2 w-full" required />
         </div>
         <div className='ContInput'>
-          <label>Precio</label>
-          <input type="number" name="price" value={product.price} onChange={handleChange} className="border rounded-md p-2 w-full" required />
+          <label htmlFor="price">Precio</label>
+          <input type="number" id="price" name="price" value={product.price} onChange={handleChange} className="border rounded-md p-2 w-full" required />
         </div>
         <div className='ContInput'>
-          <label>Documento/Archivo Principal</label>
+          <label htmlFor="document">Documento/Archivo Principal</label>
           <div className="flex items-center justify-center w-full">
             <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -178,12 +178,12 @@ const ProductoExtend: React.FC = () => {
                 </p>
                 <p className="text-xs text-gray-500">PDF, DOC, MP4, JPG, PNG (MAX. 100MB)</p>
               </div>
-              <input type="file" name="document" accept=".pdf,.doc,.docx,image/*,video/*" onChange={handleFileChange} className="hidden" />
+              <input type="file" id="document" name="document" accept=".pdf,.doc,.docx,image/*,video/*" onChange={handleFileChange} className="hidden" />
             </label>
           </div>
         </div>
         <div className='ContInput'>
-          <label>Imagen</label>
+          <label htmlFor="image">Imagen</label>
           <div className="flex items-center justify-center w-full">
             <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -193,7 +193,7 @@ const ProductoExtend: React.FC = () => {
                 </p>
                 <p className="text-xs text-gray-500">JPG, PNG (MAX. 5MB)</p>
               </div>
-              <input type="file" name="image" accept="image/*" onChange={handleFileChange} className="hidden" />
+              <input type="file" id="image" name="image" accept="image/*" onChange={handleFileChange} className="hidden" />
             </label>
           </div>
         </div>

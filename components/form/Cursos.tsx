@@ -168,15 +168,15 @@ const CursosForm = () => {
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         {/* Campos del curso */}
         <div className='ContInput'>
-          <label>Título</label>
-          <input type="text" name="title" value={course.title} onChange={handleChange} className="border rounded-md p-2 w-full" required />
+          <label htmlFor="title">Título</label>
+          <input type="text" name="title" id="title" value={course.title} onChange={handleChange} className="border rounded-md p-2 w-full" required />
         </div>
         <div className='ContInput'>
-          <label>Descripción</label>
-          <textarea name="description" value={course.description} onChange={handleChange} className="border rounded-md p-2 w-full" required />
+          <label htmlFor="description">Descripción</label>
+          <textarea name="description" id="description" value={course.description} onChange={handleChange} className="border rounded-md p-2 w-full" required />
         </div>
         <div className='ContInput'>
-          <label>Nivel</label>
+          <label htmlFor="level">Nivel</label>
           <Select label='Nivel' name="level" value={course.level} onChange={handleChange} required>
             <SelectItem key="Básico" value="Básico">Básico</SelectItem>
             <SelectItem key="Intermedio" value="Intermedio">Intermedio</SelectItem>
@@ -184,31 +184,31 @@ const CursosForm = () => {
           </Select>
         </div>
         <div className='ContInput'>
-          <label>Idioma</label>
-          <input type="text" name="language" value={course.language} onChange={handleChange} className="border rounded-md p-2 w-full" required />
+          <label htmlFor="language">Idioma</label>
+          <input type="text" name="language" id="language" value={course.language} onChange={handleChange} className="border rounded-md p-2 w-full" required />
         </div>
         <div className='ContInput'>
-          <label>Duración (minutos)</label>
-          <input type="number" name="duration" value={course.duration} onChange={handleChange} className="border rounded-md p-2 w-full" required />
+          <label htmlFor="duration">Duración (minutos)</label>
+          <input type="number" name="duration" id="duration" value={course.duration} onChange={handleChange} className="border rounded-md p-2 w-full" required />
         </div>
         <div className='ContInput'>
-          <label>Cantidad Comprados</label>
-          <input type="number" name="purchased" value={course.purchased} onChange={handleChange} className="border rounded-md p-2 w-full" required />
+          <label htmlFor="purchased">Cantidad Comprados</label>
+          <input type="number" name="purchased" id="purchased" value={course.purchased} onChange={handleChange} className="border rounded-md p-2 w-full" required />
         </div>
         <div className='ContInput'>
-          <label>Profesor</label>
-          <input type="text" name="teacher" value={course.teacher} onChange={handleChange} className="border rounded-md p-2 w-full" required />
+          <label htmlFor="teacher">Profesor</label>
+          <input type="text" name="teacher" id="teacher" value={course.teacher} onChange={handleChange} className="border rounded-md p-2 w-full" required />
         </div>
         <div className='ContInput'>
-          <label>Descripción del Profesor</label>
-          <textarea name="teacherDescription" value={course.teacherDescription} onChange={handleChange} className="border rounded-md p-2 w-full" required />
+          <label htmlFor="teacherDescription">Descripción del Profesor</label>
+          <textarea name="teacherDescription" id="teacherDescription" value={course.teacherDescription} onChange={handleChange} className="border rounded-md p-2 w-full" required />
         </div>
         <div className='ContInput'>
-          <label>Precio</label>
-          <input type="number" name="price" value={course.price} onChange={handleChange} className="border rounded-md p-2 w-full" required />
+          <label htmlFor="price">Precio</label>
+          <input type="number" name="price" id="price" value={course.price} onChange={handleChange} className="border rounded-md p-2 w-full" required />
         </div>
         <div className='ContInput'>
-          <label>Video Principal</label>
+          <label htmlFor="video">Video Principal</label>
           <div className="flex items-center justify-center w-full">
             <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -218,12 +218,12 @@ const CursosForm = () => {
                 </p>
                 <p className="text-xs text-gray-500">MP4, WebM, Ogg (MAX. 100MB)</p>
               </div>
-              <input type="file" name="video" accept="video/*" onChange={handleFileChange} className="hidden" />
+              <input type="file" name="video" id="video" accept="video/*" onChange={handleFileChange} className="hidden" />
             </label>
           </div>
         </div>
         <div className='ContInput'>
-          <label>Imagen</label>
+          <label htmlFor="image">Imagen</label>
           <div className="flex items-center justify-center w-full">
             <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -233,7 +233,7 @@ const CursosForm = () => {
                 </p>
                 <p className="text-xs text-gray-500">Imagen (MAX. 2MB)</p>
               </div>
-              <input type="file" name="image" accept="image/*" onChange={handleFileChange} className="hidden" required />
+              <input type="file" name="image" id="image" accept="image/*" onChange={handleFileChange} className="hidden" required />
             </label>
           </div>
         </div>
@@ -244,6 +244,7 @@ const CursosForm = () => {
             Título del Capítulo
           </label>
           <input
+            id="chapterTitle"
             type="text"
             value={chapterTitle}
             onChange={(e) => setChapterTitle(e.target.value)}
@@ -255,6 +256,7 @@ const CursosForm = () => {
             Descripción del Capítulo
           </label>
           <textarea
+            id="chapterDescription"
             value={chapterDescription}
             onChange={(e) => setChapterDescription(e.target.value)}
             className="border rounded-md p-2 w-full"
@@ -265,6 +267,7 @@ const CursosForm = () => {
             Duración del Capítulo (minutos)
           </label>
           <input
+            id="chapterDuration"
             type="number"
             value={chapterDuration}
             onChange={(e) => setChapterDuration(Number(e.target.value))}
